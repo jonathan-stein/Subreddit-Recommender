@@ -6,7 +6,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 def train(data_file):
     data_set = pd.read_csv(data_file)
-    tfidf_matrix = TfidfVectorizer(analyzer='word', ngram_range=(1,1), stop_words='english', sublinear_tf=True) # may want to remove sublinlear_tf and change min_df to 1: right now only unigrams
+    tfidf_matrix = TfidfVectorizer(analyzer='word', ngram_range=(1,2), stop_words='english', sublinear_tf=True)
+    # use bigrams since names are bigrams
     tfidf_fit = tfidf_matrix.fit_transform(data_set['text'])
     similarities = cosine_similarity(tfidf_fit, tfidf_fit)
 
@@ -22,9 +23,3 @@ def train(data_file):
         most_similar[row['name']] = similar_subreddits[1:] # don't include itself
 
     return most_similar
-'''
-results = train("items.csv")
-recs = results["Baby sunshade top"][:5]
-for rec in recs:
-    print("Recommended: " + rec[0] + " (score:" + str(rec[1]) + ")")
-'''
