@@ -3,7 +3,7 @@ import recommender
 import sys
 import add_subreddits
 if __name__ == '__main__':
-    
+
     file = open('items.csv', 'w')
     file.write('name,text\n')
     file.close()
@@ -12,5 +12,7 @@ if __name__ == '__main__':
 
     results = recommender.train('items.csv')
     recommended_subreddits = results['user_twitter'][:5]  # returns top 5 subreddits right now
+    i = 1
     for rec in recommended_subreddits:
-        print(rec[0] +" (score:" +str(rec[1]) + ")")
+        print(str(i) + ': '+ rec)
+        i+=1
